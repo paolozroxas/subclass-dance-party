@@ -1,11 +1,16 @@
 var makeBouncingDancer = function(top, left, timeBetweenSteps) {
-  timeBetweenSteps = (Math.random() * 250) + 20;
-  makeDancer.call(this, top, left, timeBetweenSteps);
+  timeBetweenSteps = 50;
   this.vectorx = (Math.random() * 50) - 25;
   this.vectory = (Math.random() * 50) - 25;
+  if (top - 80 > 0) {
+    top = top - 80;
+  }
+  if (left - 80 > 0) {
+    left = left - 80;
+  }
+  makeDancer.call(this, top, left, timeBetweenSteps);
   this.locationy = top;
   this.locationx = left;
-  
 };
 
 makeBouncingDancer.prototype = Object.create(makeDancer.prototype);
@@ -15,10 +20,10 @@ makeBouncingDancer.prototype.step = function(timeBetweenSteps) {
   var oldStep = makeDancer.prototype.step;
   oldStep.call(this, timeBetweenSteps);
   
-  if (this.locationx + this.vectorx > window.innerWidth) {
+  if (this.locationx + this.vectorx > (window.innerWidth - 80)) {
     this.vectorx = (-1) * this.vectorx;
   }
-  if (this.locationy + this.vectory > window.innerHeight) {
+  if (this.locationy + this.vectory > (window.innerHeight - 80)) {
     this.vectory = (-1) * this.vectory;
   }
   if (this.locationx + this.vectorx < 0) {
@@ -29,13 +34,20 @@ makeBouncingDancer.prototype.step = function(timeBetweenSteps) {
   }
   
   var newX = this.locationx + this.vectorx;
+
   var newY = this.locationy + this.vectory;
+  
   
   this.locationx = newX;
   this.locationy = newY;
-  
-  this.setPosition(newY, newX);
-  
+
+  var stopped = this.$node.data('stopped') === 'true';
+  if (!stopped) {
+    this.setPosition(newY, newX);    
+  }
+
+
+
   // var styleSettings = {
   //   top: newY,
   //   left: newX

@@ -29,5 +29,53 @@ $(document).ready(function() {
     );
     $('body').append(dancer.$node);
   });
+  $('.addLineDanceButton').on('click', function(event) {
+
+    if ($('.dancer').data('stopped') === 'true') {
+      $('.dancer').data('stopped', 'false');
+      var $dancers = $('.dancer');
+
+      $('.dancer').each(function() {
+        $(this).css('top', $('body').height() * Math.random());
+        $(this).css('left', $('body').width() * Math.random());
+      });
+      
+      
+      
+    } else {
+      $('.dancer').data('stopped', 'true');
+      var bodyHeight = $('body').height();
+      var bodyWidth = $('body').width();
+      
+      $('.dancer').each(function() {
+        var left = $(this).css('left');
+        var leftNum = Number(left.substring(0, left.length - 2));
+        if ((leftNum > bodyWidth * 0.3 && leftNum < bodyWidth * 0.45) || (leftNum > bodyWidth * 0.65 && leftNum < bodyWidth * 0.8)) {
+          $(this).css('top', '35%');
+        } else {
+          $(this).css('top', 500);
+        }
+      });
+      
+      // else do this $('.dancer').css('top', 500);
+
+    }
+    
+  });
+  
+
 });
 
+  $('.dancer').on('click', function() {
+    console.log('yes')
+    $('.dancer').animate({height: "20px"}, 500);
+  });
+
+
+/*
+var left = $('.dancer').css('left') ;
+Number(left.substring(0, left.length - 2));
+
+
+
+*/
