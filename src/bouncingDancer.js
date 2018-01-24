@@ -43,6 +43,10 @@ makeBouncingDancer.prototype.step = function(timeBetweenSteps) {
       var distance = Math.sqrt(dx * dx + dy * dy);
       if (distance < 80 && distance !== 0) {
         //collision handler here
+        //implement real physics later on :)
+        me.vectorx = dx * 0.5;
+        me.vectory = dy * 0.5;
+        
         
       }
     }
