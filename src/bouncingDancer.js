@@ -20,10 +20,11 @@ makeBouncingDancer.prototype.step = function(timeBetweenSteps) {
   var oldStep = makeDancer.prototype.step;
   oldStep.call(this, timeBetweenSteps);
   
-  if (this.locationx + this.vectorx > (window.innerWidth - 80)) {
+  //edge collisions
+  if (this.locationx + this.vectorx > 1350 - 80) {
     this.vectorx = (-1) * this.vectorx;
   }
-  if (this.locationy + this.vectory > (window.innerHeight - 80)) {
+  if (this.locationy + this.vectory > 810 - 80) {
     this.vectory = (-1) * this.vectory;
   }
   if (this.locationx + this.vectorx < 0) {
@@ -33,8 +34,23 @@ makeBouncingDancer.prototype.step = function(timeBetweenSteps) {
     this.vectory = (-1) * this.vectory;
   }
   
+  var me = this;
+  var others = $('.dancer');
+  for (var i = 0; i < others.length; i++) {
+    if (others.length > 1) {
+      var dx = me.locationx - $(others[i]).attr('data-x');
+      var dy = me.locationy - $(others[i]).attr('data-y');
+      var distance = Math.sqrt(dx * dx + dy * dy);
+      if (distance < 80 && distance !== 0) {
+        //collision handler here
+        
+      }
+    }
+  };
+  
+  
+  
   var newX = this.locationx + this.vectorx;
-
   var newY = this.locationy + this.vectory;
   
   
@@ -43,8 +59,12 @@ makeBouncingDancer.prototype.step = function(timeBetweenSteps) {
 
   var stopped = this.$node.data('stopped') === 'true';
   if (!stopped) {
-    this.setPosition(newY, newX);    
+    this.$node.attr('data-x', newX);
+    this.$node.attr('data-y', newY);  
+    this.setPosition(newY, newX);   
   }
+    
+    
 
 
 

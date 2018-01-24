@@ -21,10 +21,10 @@ $(document).ready(function() {
     var dancerMakerFunction = window[dancerMakerFunctionName]; 
 
     // make a dancer with a random position
-
+    
     var dancer = new dancerMakerFunction( 
-      $('body').height() * Math.random(),
-      $('body').width() * Math.random(),
+      (810 - 80) * Math.random(),
+      (1350 - 80) * Math.random(),
       Math.random() * 1000
     );
     $('body').append(dancer.$node);
@@ -36,8 +36,8 @@ $(document).ready(function() {
       var $dancers = $('.dancer');
 
       $('.dancer').each(function() {
-        $(this).css('top', $('body').height() * Math.random());
-        $(this).css('left', $('body').width() * Math.random());
+        $(this).css('top', (810 - 80) * Math.random());
+        $(this).css('left', (1350 - 80) * Math.random());
       });
       
       
@@ -50,10 +50,13 @@ $(document).ready(function() {
       $('.dancer').each(function() {
         var left = $(this).css('left');
         var leftNum = Number(left.substring(0, left.length - 2));
-        if ((leftNum > bodyWidth * 0.3 && leftNum < bodyWidth * 0.45) || (leftNum > bodyWidth * 0.65 && leftNum < bodyWidth * 0.8)) {
-          $(this).css('top', '35%');
+        if ((leftNum > 350 && leftNum < 450) || (leftNum > 815 && leftNum < 920)) {
+          $(this).animate({top: '270px'}, 2000).animate({top: '150px'}).animate({top: '270px'}, 1000);
+        } else if (leftNum < 70 || leftNum > 1160) {
+          $(this).animate({top: '720px'}, 3000).animate({opacity: '0'}, 1500);
+          setTimeout($(this).remove.bind($(this)), 5000);
         } else {
-          $(this).css('top', 500);
+          $(this).animate({top: '440px'}, 2000);
         }
       });
       
@@ -66,10 +69,6 @@ $(document).ready(function() {
 
 });
 
-  $('.dancer').on('click', function() {
-    console.log('yes')
-    $('.dancer').animate({height: "20px"}, 500);
-  });
 
 
 /*
